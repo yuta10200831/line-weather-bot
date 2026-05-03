@@ -66,6 +66,20 @@ public class Main {
         }
     }
 
+    // ランダムな挨拶を返すメソッド
+    private static String getRandomGreeting() {
+        String[] greetings = {
+            "おはよう！☀️",
+            "今日も1日がんばろう！💪",
+            "気をつけていってらっしゃい！👋",
+            "素敵な1日になりますように✨",
+            "今日も元気に行ってみよう！😆",
+            "朝だよ！起きる時間だー！⏰"
+        };
+        java.util.Random random = new java.util.Random();
+        return greetings[random.nextInt(greetings.length)];
+    }
+
     private static String getOtaruWeather() {
         // 小樽市の緯度・経度
         String lat = "43.1907";
@@ -93,8 +107,11 @@ public class Main {
             
             // 天気コードを分かりやすい日本語に変換
             String weatherText = decodeWeather(weatherCode);
+            
+            // ランダムな挨拶を取得
+            String greeting = getRandomGreeting();
 
-            return String.format("今日の小樽の天気は「%s」！\n🌡️ 最高気温: %.1f℃ / 最低気温: %.1f℃ だよ！", weatherText, maxTemp, minTemp);
+            return String.format("%s\n\n今日の小樽の天気は「%s」！\n🌡️ 最高気温: %.1f℃ / 最低気温: %.1f℃ だよ！", greeting, weatherText, maxTemp, minTemp);
 
         } catch (Exception e) {
             e.printStackTrace();
