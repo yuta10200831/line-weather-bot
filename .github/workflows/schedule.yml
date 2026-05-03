@@ -1,0 +1,39 @@
+name: Run Weather Bot Every Morning
+
+# いつ実行するか（トリガー）の設定
+on:
+  schedule:
+    # 毎日朝7時 (日本時間) に実行
+    # ※GitHubはUTC(世界標準時)で動いているので、日本時間(JST)の7時は、UTCの22時になります
+    - cron: '0 22 * * *'
+  
+  # 手動で「実行ボタン」を押して動かせるようにもしておく
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest # 実行するサーバーのOS
+
+    steps:
+      # 1. GitHubからコードをダウンロードする
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Java (JDK 17) を準備する
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 3. Gradleを準備する
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      # 4. プログラムを実行する！
+      - name: Run the bot
+        # GitHubのSecrets（秘密の金庫）からトークンとIDを読み込んで環境変数にセット
+        env:
+          LINE_CHANNEL_TOKEN: ${{ secrets.LINE_CHANNEL_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+        run: gradle run

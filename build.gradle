@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JSONを簡単に扱うためのライブラリ（Gson）
+    implementation 'com.google.code.gson:gson:2.10.1'
+}
+
+application {
+    // プログラムの開始地点（Mainクラス）を指定
+    mainClass = 'bot.Main'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
