@@ -2,7 +2,6 @@ name: Run Weather Bot Every Morning
 
 # いつ実行するか（トリガー）の設定
 on:
-  push:
   schedule:
     # 毎日朝7時 (日本時間) に実行
     # ※GitHubはUTC(世界標準時)で動いているので、日本時間(JST)の7時は、UTCの22時になります

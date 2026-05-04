@@ -66,6 +66,24 @@ public class Main {
         }
     }
 
+    // ランダムなラッキーアイテムを返すメソッド
+    private static String getRandomLuckyItem() {
+        String[] items = {
+            "あたたかいコーヒー ☕️",
+            "お気に入りの音楽 🎵",
+            "赤いボールペン 🖊️",
+            "甘いチョコレート 🍫",
+            "新しい靴下 🧦",
+            "読みかけの本 📖",
+            "笑顔 ☺️",
+            "お散歩 🚶‍♂️",
+            "フルーツ 🍎",
+            "くりぽこちゃん!!"
+        };
+        java.util.Random random = new java.util.Random();
+        return items[random.nextInt(items.length)];
+    }
+
     // ランダムな挨拶を返すメソッド
     private static String getRandomGreeting() {
         String[] greetings = {
@@ -105,17 +123,41 @@ public class Main {
             double minTemp = daily.getAsJsonArray("temperature_2m_min").get(0).getAsDouble();
             int weatherCode = daily.getAsJsonArray("weathercode").get(0).getAsInt();
             
+            // 明日のデータ（配列の1番目）も抜き出す
+            int tomorrowWeatherCode = daily.getAsJsonArray("weathercode").get(1).getAsInt();
+            
             // 天気コードを分かりやすい日本語に変換
             String weatherText = decodeWeather(weatherCode);
+            String tomorrowWeatherText = decodeWeather(tomorrowWeatherCode);
+            
+            // 気温から服装アドバイスを取得
+            String clothingAdvice = getClothingAdvice(maxTemp);
             
             // ランダムな挨拶を取得
             String greeting = getRandomGreeting();
 
-            return String.format("%s\n\n今日の小樽の天気は「%s」！\n🌡️ 最高気温: %.1f℃ / 最低気温: %.1f℃ だよ！", greeting, weatherText, maxTemp, minTemp);
+            // ランダムなラッキーアイテムを取得
+            String luckyItem = getRandomLuckyItem();
+
+            return String.format("%s\n\n今日の小樽の天気は「%s」！\n🌡️ 最高気温: %.1f℃ / 最低気温: %.1f℃ だよ！\n\n👕 服装アドバイス:\n%s\n\n🔮 今日のラッキーアイテム: 「%s」\n\n💡 ちなみに明日は「%s」の予報だよ！", 
+                greeting, weatherText, maxTemp, minTemp, clothingAdvice, luckyItem, tomorrowWeatherText);
 
         } catch (Exception e) {
             e.printStackTrace();
             return "天気の取得に失敗しちゃったみたい💦";
+        }
+    }
+
+    // 気温に合わせた服装アドバイスを返すメソッド
+    private static String getClothingAdvice(double maxTemp) {
+        if (maxTemp >= 25.0) {
+            return "今日は半袖で快適に過ごせそう！👕";
+        } else if (maxTemp >= 15.0) {
+            return "長袖シャツか、薄手の上着があるといいかも！🧥";
+        } else if (maxTemp >= 5.0) {
+            return "結構冷えるから、暖かいコートを着ていってね！🧣";
+        } else {
+            return "極寒！ダウンジャケットと手袋必須だよ！🥶";
         }
     }
 
