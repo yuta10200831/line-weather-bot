@@ -21,24 +21,24 @@ public class Main {
 
     // LINEにメッセージを送信するメソッド
     private static void sendLineMessage(String weatherText) {
-        // GitHub Actionsの「Secrets（環境変数）」からトークンとIDを読み込むように変更！
-        // こうすることで、パスワードを直接コードに書かなくて済むから安全だよ👍
+        // GitHub Actionsの「Secrets（環境変数）」からトークンを読み込む
+        // ブロードキャスト（全員送信）にするから、特定のユーザーIDは不要になるよ！
         String channelToken = System.getenv("LINE_CHANNEL_TOKEN");
-        String userId = System.getenv("LINE_USER_ID");
 
-        if (channelToken == null || userId == null) {
-            System.out.println("❌ エラー: LINEのトークンかユーザーIDが設定されていません！");
+        if (channelToken == null) {
+            System.out.println("❌ エラー: LINEのトークンが設定されていません！");
             System.out.println("GitHubのSecrets設定を確認してね！");
             return;
         }
 
-        String url = "https://api.line.me/v2/bot/message/push";
+        // ブロードキャスト（一斉送信）用のURLに変更！
+        String url = "https://api.line.me/v2/bot/message/broadcast";
 
-        // LINEに送るJSONデータを作る（改行が含まれていても大丈夫なようにエスケープ処理を入れる）
+        // LINEに送るJSONデータを作る（宛先の "to" が不要になるよ！）
         String escapedText = weatherText.replace("\n", "\\n");
         String jsonBody = String.format(
-            "{\"to\": \"%s\", \"messages\": [{\"type\": \"text\", \"text\": \"%s\"}]}",
-            userId, escapedText
+            "{\"messages\": [{\"type\": \"text\", \"text\": \"%s\"}]}",
+            escapedText
         );
 
         try {
