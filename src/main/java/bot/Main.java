@@ -92,7 +92,9 @@ public class Main {
             "気をつけていってらっしゃい！👋",
             "素敵な1日になりますように✨",
             "今日も元気に行ってみよう！😆",
-            "朝だよ！起きる時間だー！⏰"
+            "朝だよ！起きる時間だー！⏰",
+            "僕もそろそろ起きようかな",
+            "なんかお腹すいたよー"
         };
         java.util.Random random = new java.util.Random();
         return greetings[random.nextInt(greetings.length)];
