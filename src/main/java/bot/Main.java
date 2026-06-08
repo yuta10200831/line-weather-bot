@@ -78,7 +78,16 @@ public class Main {
             "笑顔 ☺️",
             "お散歩 🚶‍♂️",
             "フルーツ 🍎",
-            "くりぽこちゃん!!"
+            "くりぽこちゃん!!",
+            "僕のお尻",
+            "僕のお腹",
+            "僕の頭",
+            "僕の肩",
+            "僕の背中",
+            "僕の腕",
+            "僕の手",
+            "僕の足",
+            "僕のひざ"
         };
         java.util.Random random = new java.util.Random();
         return items[random.nextInt(items.length)];
@@ -94,7 +103,13 @@ public class Main {
             "今日も元気に行ってみよう！😆",
             "朝だよ！起きる時間だー！⏰",
             "僕もそろそろ起きようかな",
-            "なんかお腹すいたよー"
+            "なんかお腹すいたよー",
+            "今日は二度寝するよ",
+            "砂肝が食べたいなー",
+            "チーズが食べたいなー",
+            "ガブつきたい気分なんだよね",
+            "お尻がかゆいなー",
+            "ズーミーズー運動の気分だな"
         };
         java.util.Random random = new java.util.Random();
         return greetings[random.nextInt(greetings.length)];
